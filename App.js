@@ -1,13 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
-import { mainStyles } from './styles/Styles';
+import { mainStyle } from './styles/Style';
 import React from 'react';
 import { Text, View } from 'react-native';
 
+import SnakeBoard from './components/SnakeBoard';
+
 export default function App() {
   return (
-    <View style={mainStyles.container}>
+    <View style={mainStyle.container}>
       <Text>Open up App.js to start working on your app!</Text>
-
+      <SnakeBoard width={10} height={10} />
       <StatusBar style="auto" />
     </View>
   );

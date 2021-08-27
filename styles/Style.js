@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-const mainStyles = StyleSheet.create({
+const mainStyle = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -9,4 +9,4 @@ const mainStyles = StyleSheet.create({
   },
 });
 
-export { mainStyles };
+export { mainStyle };
