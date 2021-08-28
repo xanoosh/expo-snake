@@ -1,14 +1,14 @@
-import { View, Text } from 'react-native';
 import React from 'react';
+import { View } from 'react-native';
 import { CellStyle } from '../styles/Style';
 
-const SnakeBoardCell = ({ positionX, positionY }) => {
+const SnakeBoardCell = ({ positionX, positionY, isActive }) => {
   return (
-    <View style={CellStyle.cell}>
-      <Text>
+    <View style={isActive ? CellStyle.cellActive : CellStyle.cell}>
+      {/* <Text>
         x {positionX}
         {positionY}
-      </Text>
+      </Text> */}
     </View>
   );
 };
