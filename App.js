@@ -23,8 +23,9 @@ export default function App() {
   ]);
   // gonna need below states when some kind of loop will be implemented
   //(preferrably requestAnimationFrame)
-  const [snakeDirection, setSnakeDirection] = useState('left');
-  const [snakeSpeed, setSnakeSpeed] = useState(3); //3 moves per second
+  const [snakeDirection, setSnakeDirection] = useState('up');
+  const [gameOn, setGameOn] = useState(false);
+  const [snakeSpeed, setSnakeSpeed] = useState(2); //3 moves per second
   //food state:
   // const [snakeFoodPosition, setSnakeFoodPosition] = useState({ x: 10, y: 2 });
   // const [snakeAteFood, setSnakeAteFood] = useState(false);
@@ -39,35 +40,22 @@ export default function App() {
     return false;
   };
   const gameLoop = (timeStamp) => {
-    if (updateFrame(timeStamp)) {
-      move();
+    if (gameOn) {
+      if (updateFrame(timeStamp)) {
+        move(snakeDirection);
+      }
     }
-    //some condition for end
-    requestAnimationFrame(gameLoop);
   };
 
-  //calculate starting snake position on mount:
   useEffect(() => {
-    // (async () => {
-    //   await setSnakePosition(() => {
-    //     return [
-    //       {
-    //         x: Math.round(boardSquareSize / 2),
-    //         y: Math.round(boardSquareSize / 2) - 1,
-    //       },
-    //       {
-    //         x: Math.round(boardSquareSize / 2),
-    //         y: Math.round(boardSquareSize / 2),
-    //       },
-    //       {
-    //         x: Math.round(boardSquareSize / 2),
-    //         y: Math.round(boardSquareSize / 2) + 1,
-    //       },
-    //     ];
-    //   }).then(requestAnimationFrame(gameLoop));
-    //   //start loop?
-    // })();
-  }, []);
+    if (gameOn) requestAnimationFrame(gameLoop);
+    if (!gameOn) cancelAnimationFrame(gameLoop);
+  }, [gameOn]);
+
+  useEffect(() => {
+    requestAnimationFrame(gameLoop);
+  }, [snakePosition]);
+
   //move snake function (update snake position):
   const move = (snakeDirection) => {
     setSnakePosition((prev) => {
@@ -105,33 +93,43 @@ export default function App() {
       <View style={mainStyle.buttonGroup}>
         <Pressable
           style={[mainStyle.buttonUp, mainStyle.button]}
-          onPress={() => move('up')}
+          onPress={() => setSnakeDirection('up')}
         >
           <View style={mainStyle.arrowUp}></View>
         </Pressable>
         <Pressable
           style={[mainStyle.buttonDown, mainStyle.button]}
-          onPress={() => move('down')}
+          onPress={() => setSnakeDirection('down')}
         >
           <View style={mainStyle.arrowDown}></View>
         </Pressable>
         <Pressable
           style={[mainStyle.buttonLeft, mainStyle.button]}
-          onPress={() => move('left')}
+          onPress={() => setSnakeDirection('left')}
         >
           <View style={mainStyle.arrowLeft}></View>
         </Pressable>
         <Pressable
           style={[mainStyle.buttonRight, mainStyle.button]}
-          onPress={() => move('right')}
+          onPress={() => setSnakeDirection('right')}
         >
           <View style={mainStyle.arrowRight}></View>
         </Pressable>
         <Pressable
           style={[mainStyle.buttonPlayPause]}
-          onPress={() => requestAnimationFrame(gameLoop)}
+          onPress={() => {
+            if (!gameOn) {
+              setGameOn(true);
+            }
+            if (gameOn) {
+              setGameOn(false);
+              cancelAnimationFrame(gameLoop);
+            }
+          }}
         >
-          <Text style={mainStyle.buttonPlayPauseText}>Play</Text>
+          <Text style={mainStyle.buttonPlayPauseText}>
+            {gameOn ? 'Pause' : 'Play'}
+          </Text>
         </Pressable>
       </View>
 

@@ -88,6 +88,13 @@ const mainStyle = StyleSheet.create({
     top: '25%',
     left: '10%',
   },
+  buttonPlayPause: {
+    width: '10%',
+    borderWidth: 1,
+    borderColor: '#000',
+    borderStyle: 'solid',
+  },
+  buttonPlayPauseText: {},
 });
 
 const BoardStyle = StyleSheet.create({
