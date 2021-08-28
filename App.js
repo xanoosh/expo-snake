@@ -26,21 +26,25 @@ export default function App() {
   const [snakeDirection, setSnakeDirection] = useState('up');
   const [gameOn, setGameOn] = useState(false);
   const [snakeSpeed, setSnakeSpeed] = useState(2); //3 moves per second
+  const [lastTimeStamp, setLastTimeStamp] = useState(0);
+  const [currentTimeStamp, setCurrentTimeStamp] = useState(0);
   //food state:
   // const [snakeFoodPosition, setSnakeFoodPosition] = useState({ x: 10, y: 2 });
   // const [snakeAteFood, setSnakeAteFood] = useState(false);
 
   //check time in miliseconds:
-  let lastTimeStamp = 0;
+  // let lastTimeStamp = 0;
   const updateFrame = (timeStamp) => {
-    if (timeStamp - lastTimeStamp >= 1000 / snakeSpeed) {
-      lastTimeStamp = timeStamp;
+    if (currentTimeStamp - lastTimeStamp >= 1000 / snakeSpeed) {
+      // lastTimeStamp = timeStamp;
+      setLastTimeStamp(timeStamp);
       return true;
     }
     return false;
   };
   const gameLoop = (timeStamp) => {
     if (gameOn) {
+      setCurrentTimeStamp(timeStamp);
       if (updateFrame(timeStamp)) {
         move(snakeDirection);
       }
@@ -49,12 +53,12 @@ export default function App() {
 
   useEffect(() => {
     if (gameOn) requestAnimationFrame(gameLoop);
-    if (!gameOn) cancelAnimationFrame(gameLoop);
+    // if (!gameOn) cancelAnimationFrame(gameLoop);
   }, [gameOn]);
 
   useEffect(() => {
     requestAnimationFrame(gameLoop);
-  }, [snakePosition]);
+  }, [currentTimeStamp]);
 
   //move snake function (update snake position):
   const move = (snakeDirection) => {
@@ -82,6 +86,10 @@ export default function App() {
   };
   return (
     <View style={mainStyle.container}>
+      <Text style={mainStyle.buttonPlayPauseText}>Last:{lastTimeStamp}</Text>
+      <Text style={mainStyle.buttonPlayPauseText}>
+        Current:{currentTimeStamp}
+      </Text>
       {snakePosition.length !== 0 ? (
         <SnakeBoard
           boardSquareSize={boardSquareSize}
@@ -120,6 +128,7 @@ export default function App() {
           onPress={() => {
             if (!gameOn) {
               setGameOn(true);
+              requestAnimationFrame(gameLoop);
             }
             if (gameOn) {
               setGameOn(false);
