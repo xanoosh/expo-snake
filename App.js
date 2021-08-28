@@ -44,10 +44,10 @@ export default function App() {
   };
   const gameLoop = (timeStamp) => {
     if (gameOn) {
-      setCurrentTimeStamp(timeStamp);
       if (updateFrame(timeStamp)) {
         move(snakeDirection);
       }
+      setCurrentTimeStamp(timeStamp);
     }
   };
 
