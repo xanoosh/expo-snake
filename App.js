@@ -12,6 +12,9 @@ export default function App() {
     { x: 10, y: 11 },
   ]);
   const [snakeDirection, setSnakeDirection] = useState('up');
+  const [snakeSpeed, setSnakeSpeed] = useState(1);
+  const [snakeFoodPosition, setSnakeFoodPosition] = useState({ x: 10, y: 2 });
+  const [snakeAteFood, setSnakeAteFood] = useState(false);
 
   //move snake function (update snake position):
   const move = () => {
@@ -19,7 +22,7 @@ export default function App() {
       setSnakePosition((prev) => {
         return (newPosition = [...prev].map((el) => ({
           x: el.x,
-          y: el.y - 1,
+          y: el.y === 0 ? 19 : el.y - 1,
         })));
       });
     }
