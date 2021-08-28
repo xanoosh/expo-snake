@@ -72,25 +72,25 @@ export default function App() {
           style={[mainStyle.buttonUp, mainStyle.button]}
           onPress={() => move('up')}
         >
-          <Text style={mainStyle.buttonText}>up</Text>
+          <View style={mainStyle.arrowUp}></View>
         </Pressable>
         <Pressable
           style={[mainStyle.buttonDown, mainStyle.button]}
           onPress={() => move('down')}
         >
-          <Text style={mainStyle.buttonText}>down</Text>
+          <View style={mainStyle.arrowDown}></View>
         </Pressable>
         <Pressable
           style={[mainStyle.buttonLeft, mainStyle.button]}
           onPress={() => move('left')}
         >
-          <Text style={mainStyle.buttonText}>left</Text>
+          <View style={mainStyle.arrowLeft}></View>
         </Pressable>
         <Pressable
           style={[mainStyle.buttonRight, mainStyle.button]}
           onPress={() => move('right')}
         >
-          <Text style={mainStyle.buttonText}>right</Text>
+          <View style={mainStyle.arrowRight}></View>
         </Pressable>
       </View>
 
