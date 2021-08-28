@@ -18,17 +18,6 @@ export default function App() {
 
   //move snake function (update snake position):
   const move = (snakeDirection) => {
-    // if (snakeDirection === 'up') {
-    //   setSnakePosition((prev) => {
-    //     return (newPosition = [...prev].map((el) => ({
-    //       x: el.x,
-    //       y: el.y === 0 ? 19 : el.y - 1,
-    //     })));
-    //   });
-    // }
-    // if (snakeDirection === 'left') {
-
-    // }
     setSnakePosition((prev) => {
       const newPosition = [...prev].map((el, i) => {
         if (i === 0) {
@@ -55,7 +44,7 @@ export default function App() {
       <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 20 }}>
         Snake board below:
       </Text>
-      <SnakeBoard width={20} height={20} getSnakePosition={snakePosition} />
+      <SnakeBoard boardSquareSize={20} getSnakePosition={snakePosition} />
       <View style={mainStyle.buttonGroup}>
         <Pressable style={mainStyle.buttonUp} onPress={() => move('up')}>
           <Text style={mainStyle.buttonText}>up</Text>

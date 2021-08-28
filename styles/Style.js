@@ -84,7 +84,6 @@ const BoardStyle = StyleSheet.create({
 
 const CellStyle = StyleSheet.create({
   cell: {
-    flexBasis: '5%',
     aspectRatio: 1,
     backgroundColor: '#fff',
     borderColor: '#efefef',

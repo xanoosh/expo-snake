@@ -4,11 +4,11 @@ import { View } from 'react-native';
 import { BoardStyle } from '../styles/Style';
 import SnakeBoardCell from './SnakeBoardCell.js';
 
-const SnakeBoard = ({ width, height, getSnakePosition }) => {
+const SnakeBoard = ({ boardSquareSize, getSnakePosition }) => {
   //build board array:
   const boardMap = [];
-  for (let i = 0; i < height; i++) {
-    for (let j = 0; j < width; j++) boardMap.push({ y: i, x: j });
+  for (let i = 0; i < boardSquareSize; i++) {
+    for (let j = 0; j < boardSquareSize; j++) boardMap.push({ y: i, x: j });
   }
   //snake position checker:
   const isSnakePosition = (elX, elY) => {
@@ -22,8 +22,7 @@ const SnakeBoard = ({ width, height, getSnakePosition }) => {
   const BoardCells = boardMap.map((boardEl, i) => (
     <SnakeBoardCell
       key={i}
-      positionX={boardEl.x}
-      positionY={boardEl.y}
+      boardSquareSize={boardSquareSize}
       isActive={isSnakePosition(boardEl.x, boardEl.y)}
     />
   ));
