@@ -68,16 +68,28 @@ export default function App() {
         getSnakePosition={snakePosition}
       />
       <View style={mainStyle.buttonGroup}>
-        <Pressable style={mainStyle.buttonUp} onPress={() => move('up')}>
+        <Pressable
+          style={[mainStyle.buttonUp, mainStyle.button]}
+          onPress={() => move('up')}
+        >
           <Text style={mainStyle.buttonText}>up</Text>
         </Pressable>
-        <Pressable style={mainStyle.buttonDown} onPress={() => move('down')}>
+        <Pressable
+          style={[mainStyle.buttonDown, mainStyle.button]}
+          onPress={() => move('down')}
+        >
           <Text style={mainStyle.buttonText}>down</Text>
         </Pressable>
-        <Pressable style={mainStyle.buttonLeft} onPress={() => move('left')}>
+        <Pressable
+          style={[mainStyle.buttonLeft, mainStyle.button]}
+          onPress={() => move('left')}
+        >
           <Text style={mainStyle.buttonText}>left</Text>
         </Pressable>
-        <Pressable style={mainStyle.buttonRight} onPress={() => move('right')}>
+        <Pressable
+          style={[mainStyle.buttonRight, mainStyle.button]}
+          onPress={() => move('right')}
+        >
           <Text style={mainStyle.buttonText}>right</Text>
         </Pressable>
       </View>
