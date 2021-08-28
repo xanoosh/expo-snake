@@ -6,7 +6,7 @@ import { mainStyle } from './styles/Style';
 import SnakeBoard from './components/SnakeBoard';
 
 export default function App() {
-  const boardSquareSize = 10;
+  const boardSquareSize = 16;
   const [snakePosition, setSnakePosition] = useState([
     {
       x: Math.round(boardSquareSize / 2),
@@ -25,7 +25,7 @@ export default function App() {
   //(preferrably requestAnimationFrame)
   const [snakeDirection, setSnakeDirection] = useState('up');
   const [gameOn, setGameOn] = useState(false);
-  const [snakeSpeed, setSnakeSpeed] = useState(2); //3 moves per second
+  const [snakeSpeed, setSnakeSpeed] = useState(30); //moves per second
   const [lastTimeStamp, setLastTimeStamp] = useState(0);
   const [currentTimeStamp, setCurrentTimeStamp] = useState(0);
   //food state:
@@ -53,7 +53,6 @@ export default function App() {
 
   useEffect(() => {
     if (gameOn) requestAnimationFrame(gameLoop);
-    // if (!gameOn) cancelAnimationFrame(gameLoop);
   }, [gameOn]);
 
   useEffect(() => {
@@ -86,18 +85,16 @@ export default function App() {
   };
   return (
     <View style={mainStyle.container}>
-      <Text style={mainStyle.buttonPlayPauseText}>Last:{lastTimeStamp}</Text>
-      <Text style={mainStyle.buttonPlayPauseText}>
-        Current:{currentTimeStamp}
-      </Text>
-      {snakePosition.length !== 0 ? (
-        <SnakeBoard
-          boardSquareSize={boardSquareSize}
-          getSnakePosition={snakePosition}
-        />
-      ) : (
-        <Text>Loading..</Text>
-      )}
+      <Text>lastTimeStamp:</Text>
+      <Text style={{ fontWeight: 'bold' }}>{lastTimeStamp}</Text>
+      <Text>currentTimeStamp:</Text>
+      <Text style={{ fontWeight: 'bold' }}>{currentTimeStamp}</Text>
+
+      <SnakeBoard
+        boardSquareSize={boardSquareSize}
+        getSnakePosition={snakePosition}
+      />
+
       <View style={mainStyle.buttonGroup}>
         <Pressable
           style={[mainStyle.buttonUp, mainStyle.button]}

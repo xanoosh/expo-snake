@@ -23,8 +23,6 @@ const mainStyle = StyleSheet.create({
     backgroundColor: '#06bcee',
     paddingLeft: 10,
     paddingRight: 10,
-    // paddingBottom: 5,
-    // paddingTop: 5,
     aspectRatio: 1,
   },
   buttonUp: {
@@ -89,12 +87,14 @@ const mainStyle = StyleSheet.create({
     left: '10%',
   },
   buttonPlayPause: {
-    width: '10%',
+    width: '15%',
     borderWidth: 1,
     borderColor: '#000',
     borderStyle: 'solid',
   },
-  buttonPlayPauseText: {},
+  buttonPlayPauseText: {
+    textAlign: 'center',
+  },
 });
 
 const BoardStyle = StyleSheet.create({
