@@ -6,7 +6,7 @@ import SnakeBoard from './components/SnakeBoard';
 import NavButtons from './components/NavButtons';
 
 export default function App() {
-  const boardSquareSize = 16;
+  const boardSquareSize = 15;
   const [snakePosition, setSnakePosition] = useState([
     {
       x: Math.round(boardSquareSize / 2),
@@ -21,22 +21,18 @@ export default function App() {
       y: Math.round(boardSquareSize / 2) + 1,
     },
   ]);
-  // gonna need below states when some kind of loop will be implemented
-  //(preferrably requestAnimationFrame)
   const [snakeDirection, setSnakeDirection] = useState('up');
   const [gameOn, setGameOn] = useState(false);
-  const [snakeSpeed, setSnakeSpeed] = useState(30); //moves per second
+  const [snakeSpeed, setSnakeSpeed] = useState(5); //moves per second
   const [lastTimeStamp, setLastTimeStamp] = useState(0);
   const [currentTimeStamp, setCurrentTimeStamp] = useState(0);
   //food state:
   // const [snakeFoodPosition, setSnakeFoodPosition] = useState({ x: 10, y: 2 });
   // const [snakeAteFood, setSnakeAteFood] = useState(false);
 
-  //check time in miliseconds:
-  // let lastTimeStamp = 0;
+  //check time passed in miliseconds:
   const updateFrame = (timeStamp) => {
     if (currentTimeStamp - lastTimeStamp >= 1000 / snakeSpeed) {
-      // lastTimeStamp = timeStamp;
       setLastTimeStamp(timeStamp);
       return true;
     }
