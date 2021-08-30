@@ -5,6 +5,7 @@ import { mainStyle } from './styles/Style';
 import SnakeBoard from './components/SnakeBoard';
 import NavButtons from './components/NavButtons';
 import TimeStampData from './components/TimeStampData';
+
 import {
   updateFrame,
   move,
@@ -58,7 +59,6 @@ export default function App() {
         onPress={setSnakeDirection}
       />
 
-      {/* playpause */}
       <Pressable
         style={[mainStyle.buttonPlayPause]}
         onPress={() => setGameOn(!gameOn)}

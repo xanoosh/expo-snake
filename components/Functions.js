@@ -16,6 +16,11 @@ const calcStartingPosition = (boardSquareSize) => {
   ];
 };
 
+//snake food setter
+const getFoodPosition = (snakePosition, foodSetter, board) => {
+  const randomVal = Math.floor(Math.random() * board);
+};
+
 //check time passed in animation [miliseconds]:
 const updateFrame = (current, last, speed) => {
   if (current - last >= 1000 / speed) return true;
