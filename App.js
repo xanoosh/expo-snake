@@ -4,23 +4,17 @@ import { useState, useEffect } from 'react';
 import { mainStyle } from './styles/Style';
 import SnakeBoard from './components/SnakeBoard';
 import NavButtons from './components/NavButtons';
+import {
+  updateFrame,
+  move,
+  calcStartingPosition,
+} from './components/Functions';
 
 export default function App() {
   const boardSquareSize = 15;
-  const [snakePosition, setSnakePosition] = useState([
-    {
-      x: Math.round(boardSquareSize / 2),
-      y: Math.round(boardSquareSize / 2) - 1,
-    },
-    {
-      x: Math.round(boardSquareSize / 2),
-      y: Math.round(boardSquareSize / 2),
-    },
-    {
-      x: Math.round(boardSquareSize / 2),
-      y: Math.round(boardSquareSize / 2) + 1,
-    },
-  ]);
+  const [snakePosition, setSnakePosition] = useState(
+    calcStartingPosition(boardSquareSize)
+  );
   const [snakeDirection, setSnakeDirection] = useState('up');
   const [gameOn, setGameOn] = useState(false);
   const [snakeSpeed, setSnakeSpeed] = useState(5); //moves per second
@@ -30,18 +24,12 @@ export default function App() {
   // const [snakeFoodPosition, setSnakeFoodPosition] = useState({ x: 10, y: 2 });
   // const [snakeAteFood, setSnakeAteFood] = useState(false);
 
-  //check time passed in miliseconds:
-  const updateFrame = (timeStamp) => {
-    if (currentTimeStamp - lastTimeStamp >= 1000 / snakeSpeed) {
-      setLastTimeStamp(timeStamp);
-      return true;
-    }
-    return false;
-  };
+  //main game loop:
   const gameLoop = (timeStamp) => {
     if (gameOn) {
-      if (updateFrame(timeStamp)) {
-        move(snakeDirection);
+      if (updateFrame(currentTimeStamp, lastTimeStamp, snakeSpeed)) {
+        setLastTimeStamp(timeStamp);
+        move(snakeDirection, boardSquareSize, setSnakePosition);
       }
       setCurrentTimeStamp(timeStamp);
     }
@@ -55,30 +43,6 @@ export default function App() {
     requestAnimationFrame(gameLoop);
   }, [currentTimeStamp]);
 
-  //move snake function (update snake position):
-  const move = (snakeDirection) => {
-    setSnakePosition((prev) => {
-      const max = Math.floor(boardSquareSize) - 1;
-      const newPosition = [...prev].map((el, i) => {
-        if (i === 0) {
-          if (snakeDirection === 'up') {
-            return { x: el.x, y: el.y === 0 ? max : el.y - 1 };
-          }
-          if (snakeDirection === 'down') {
-            return { x: el.x, y: el.y === max ? 0 : el.y + 1 };
-          }
-          if (snakeDirection === 'left') {
-            return { x: el.x === 0 ? max : el.x - 1, y: el.y };
-          }
-          if (snakeDirection === 'right') {
-            return { x: el.x === max ? 0 : el.x + 1, y: el.y };
-          }
-        }
-        if (i !== 0) return prev[i - 1];
-      });
-      return newPosition;
-    });
-  };
   return (
     <View style={mainStyle.container}>
       <Text>lastTimeStamp:</Text>
@@ -99,16 +63,7 @@ export default function App() {
       {/* playpause */}
       <Pressable
         style={[mainStyle.buttonPlayPause]}
-        onPress={() => {
-          if (!gameOn) {
-            setGameOn(true);
-            requestAnimationFrame(gameLoop);
-          }
-          if (gameOn) {
-            setGameOn(false);
-            cancelAnimationFrame(gameLoop);
-          }
-        }}
+        onPress={() => setGameOn(!gameOn)}
       >
         <Text style={mainStyle.buttonPlayPauseText}>
           {gameOn ? 'Pause' : 'Play'}
