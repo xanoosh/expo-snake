@@ -7,6 +7,20 @@ const mainStyle = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  buttonPlayPause: {
+    position: 'absolute',
+    bottom: 30,
+    width: '15%',
+    borderWidth: 1,
+    borderColor: '#000',
+    borderStyle: 'solid',
+  },
+  buttonPlayPauseText: {
+    textAlign: 'center',
+  },
+});
+
+const NavButtonsStyle = StyleSheet.create({
   buttonGroup: {
     position: 'relative',
     width: '100%',
@@ -86,15 +100,6 @@ const mainStyle = StyleSheet.create({
     top: '25%',
     left: '10%',
   },
-  buttonPlayPause: {
-    width: '15%',
-    borderWidth: 1,
-    borderColor: '#000',
-    borderStyle: 'solid',
-  },
-  buttonPlayPauseText: {
-    textAlign: 'center',
-  },
 });
 
 const BoardStyle = StyleSheet.create({
@@ -135,4 +140,4 @@ const CellStyle = StyleSheet.create({
   },
 });
 
-export { mainStyle, BoardStyle, CellStyle };
+export { mainStyle, BoardStyle, CellStyle, NavButtonsStyle };

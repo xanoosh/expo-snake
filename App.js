@@ -1,9 +1,9 @@
 import React from 'react';
 import { Text, View, Pressable } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
 import { mainStyle } from './styles/Style';
 import SnakeBoard from './components/SnakeBoard';
+import NavButtons from './components/NavButtons';
 
 export default function App() {
   const boardSquareSize = 16;
@@ -95,51 +95,29 @@ export default function App() {
         getSnakePosition={snakePosition}
       />
 
-      <View style={mainStyle.buttonGroup}>
-        <Pressable
-          style={[mainStyle.buttonUp, mainStyle.button]}
-          onPress={() => setSnakeDirection('up')}
-        >
-          <View style={mainStyle.arrowUp}></View>
-        </Pressable>
-        <Pressable
-          style={[mainStyle.buttonDown, mainStyle.button]}
-          onPress={() => setSnakeDirection('down')}
-        >
-          <View style={mainStyle.arrowDown}></View>
-        </Pressable>
-        <Pressable
-          style={[mainStyle.buttonLeft, mainStyle.button]}
-          onPress={() => setSnakeDirection('left')}
-        >
-          <View style={mainStyle.arrowLeft}></View>
-        </Pressable>
-        <Pressable
-          style={[mainStyle.buttonRight, mainStyle.button]}
-          onPress={() => setSnakeDirection('right')}
-        >
-          <View style={mainStyle.arrowRight}></View>
-        </Pressable>
-        <Pressable
-          style={[mainStyle.buttonPlayPause]}
-          onPress={() => {
-            if (!gameOn) {
-              setGameOn(true);
-              requestAnimationFrame(gameLoop);
-            }
-            if (gameOn) {
-              setGameOn(false);
-              cancelAnimationFrame(gameLoop);
-            }
-          }}
-        >
-          <Text style={mainStyle.buttonPlayPauseText}>
-            {gameOn ? 'Pause' : 'Play'}
-          </Text>
-        </Pressable>
-      </View>
+      <NavButtons
+        directionsArray={['up', 'down', 'left', 'right']}
+        onPress={setSnakeDirection}
+      />
 
-      <StatusBar style="auto" />
+      {/* playpause */}
+      <Pressable
+        style={[mainStyle.buttonPlayPause]}
+        onPress={() => {
+          if (!gameOn) {
+            setGameOn(true);
+            requestAnimationFrame(gameLoop);
+          }
+          if (gameOn) {
+            setGameOn(false);
+            cancelAnimationFrame(gameLoop);
+          }
+        }}
+      >
+        <Text style={mainStyle.buttonPlayPauseText}>
+          {gameOn ? 'Pause' : 'Play'}
+        </Text>
+      </Pressable>
     </View>
   );
 }
