@@ -143,6 +143,28 @@ const CellStyle = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  cellActive: {
+    // flexBasis: '5%',
+    aspectRatio: 1,
+    backgroundColor: '#06bcee',
+    borderColor: '#efefef',
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  food: {
+    // flexBasis: '5%',
+    aspectRatio: 1,
+    backgroundColor: 'red',
+    borderColor: 'red',
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export { mainStyle, BoardStyle, CellStyle, NavButtonsStyle };

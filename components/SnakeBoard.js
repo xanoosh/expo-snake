@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { BoardStyle } from '../styles/Style';
 import SnakeBoardCell from './SnakeBoardCell.js';
 
-const SnakeBoard = ({ boardSquareSize, getSnakePosition }) => {
+const SnakeBoard = ({ boardSquareSize, getSnakePosition, foodPosition }) => {
   //build board array:
   const boardMap = [];
   for (let i = 0; i < boardSquareSize; i++) {
@@ -18,12 +18,18 @@ const SnakeBoard = ({ boardSquareSize, getSnakePosition }) => {
     });
     return result;
   };
+  //food position checker:
+  const isFoodPosition = (elX, elY) => {
+    if (foodPosition.x === elX && foodPosition.y === elY) return true;
+    return false;
+  };
   //map cell components based on board array:
   const BoardCells = boardMap.map((boardEl, i) => (
     <SnakeBoardCell
       key={i}
       boardSquareSize={boardSquareSize}
       isActive={isSnakePosition(boardEl.x, boardEl.y)}
+      isFood={isFoodPosition(boardEl.x, boardEl.y)}
     />
   ));
   return <View style={BoardStyle.board}>{BoardCells}</View>;

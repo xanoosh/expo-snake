@@ -10,6 +10,8 @@ import {
   updateFrame,
   move,
   calcStartingPosition,
+  randomFoodPosition,
+  getFoodPosition,
 } from './components/Functions';
 
 export default function App() {
@@ -23,7 +25,7 @@ export default function App() {
   const [lastTimeStamp, setLastTimeStamp] = useState(0);
   const [currentTimeStamp, setCurrentTimeStamp] = useState(0);
   //food state:
-  // const [snakeFoodPosition, setSnakeFoodPosition] = useState({ x: 10, y: 2 });
+  const [foodPosition, setFoodPosition] = useState();
   // const [snakeAteFood, setSnakeAteFood] = useState(false);
 
   //main game loop:
@@ -36,6 +38,10 @@ export default function App() {
       setCurrentTimeStamp(timeStamp);
     }
   };
+
+  useEffect(() => {
+    getFoodPosition(snakePosition, boardSquareSize, setFoodPosition);
+  }, []);
 
   useEffect(() => {
     if (gameOn) requestAnimationFrame(gameLoop);
@@ -52,6 +58,7 @@ export default function App() {
       <SnakeBoard
         boardSquareSize={boardSquareSize}
         getSnakePosition={snakePosition}
+        foodPosition={foodPosition}
       />
 
       <NavButtons
