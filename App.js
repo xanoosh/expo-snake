@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { mainStyle } from './styles/Style';
 import SnakeBoard from './components/SnakeBoard';
 import NavButtons from './components/NavButtons';
+import TimeStampData from './components/TimeStampData';
 import {
   updateFrame,
   move,
@@ -45,10 +46,7 @@ export default function App() {
 
   return (
     <View style={mainStyle.container}>
-      <Text>lastTimeStamp:</Text>
-      <Text style={{ fontWeight: 'bold' }}>{lastTimeStamp}</Text>
-      <Text>currentTimeStamp:</Text>
-      <Text style={{ fontWeight: 'bold' }}>{currentTimeStamp}</Text>
+      <TimeStampData last={lastTimeStamp} current={currentTimeStamp} />
 
       <SnakeBoard
         boardSquareSize={boardSquareSize}
