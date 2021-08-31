@@ -36,6 +36,10 @@ const getFoodPosition = (snakePosition, board, foodSetter) => {
   foodSetter(food);
 };
 
+const isFoodEaten = (food, snake) => {
+  return food.x === snake.x && food.y === snake.y;
+};
+
 //check time passed in animation [miliseconds]:
 const updateFrame = (current, last, speed) => {
   if (current - last >= 1000 / speed) return true;
@@ -73,4 +77,5 @@ export {
   calcStartingPosition,
   randomFoodPosition,
   getFoodPosition,
+  isFoodEaten,
 };

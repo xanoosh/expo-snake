@@ -12,6 +12,7 @@ import {
   calcStartingPosition,
   randomFoodPosition,
   getFoodPosition,
+  isFoodEaten,
 } from './components/Functions';
 
 export default function App() {
@@ -34,6 +35,9 @@ export default function App() {
       if (updateFrame(currentTimeStamp, lastTimeStamp, snakeSpeed)) {
         setLastTimeStamp(timeStamp);
         move(snakeDirection, boardSquareSize, setSnakePosition);
+        if (isFoodEaten(foodPosition, snakePosition[0])) {
+          getFoodPosition(snakePosition, boardSquareSize, setFoodPosition);
+        }
       }
       setCurrentTimeStamp(timeStamp);
     }
