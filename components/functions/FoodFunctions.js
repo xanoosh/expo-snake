@@ -42,6 +42,8 @@ const snakeDigestedFood = (digest, digestSetter, snakePositionSetter) => {
   snakePositionSetter((prev) => [...prev, digest]);
   digestSetter(false);
 };
+//IMPORTANT: better 'digest' on head (target collision with food
+// if next head = food position just make it the new head of snake position)
 
 export {
   randomFoodPosition,
