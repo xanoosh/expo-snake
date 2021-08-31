@@ -26,12 +26,28 @@ const addEatenFood = (position, eatenSetter) => {
   eatenSetter((prev) => prev.add(position));
 };
 
-digestFood = (eatenSet, snakePosition, snakePositionSetter) => {
-  for (let i = 0; i < snakePosition.length; i++) {
-    if (!eatenSet.has(snakePosition[i])) {
-      snakePositionSetter((prev) => [...snakePosition]);
+const snakeGonnaDigest = (eatenSet, snakePosition, digestSetter) => {
+  //   result = false;
+  for (const eaten of eatenSet) {
+    if (
+      eaten.x === snakePosition[snakePosition.length - 1].x &&
+      eaten.y === snakePosition[snakePosition.length - 1].y
+    ) {
+      digestSetter(snakePosition[snakePosition.length - 1]);
     }
   }
 };
 
-export { randomFoodPosition, getFoodPosition, isFoodEaten, addEatenFood };
+const snakeDigestedFood = (digest, digestSetter, snakePositionSetter) => {
+  snakePositionSetter((prev) => [...prev, digest]);
+  digestSetter(false);
+};
+
+export {
+  randomFoodPosition,
+  getFoodPosition,
+  isFoodEaten,
+  addEatenFood,
+  snakeGonnaDigest,
+  snakeDigestedFood,
+};
