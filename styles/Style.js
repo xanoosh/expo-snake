@@ -155,7 +155,6 @@ const CellStyle = StyleSheet.create({
     justifyContent: 'center',
   },
   food: {
-    // flexBasis: '5%',
     aspectRatio: 1,
     backgroundColor: 'red',
     borderColor: 'red',

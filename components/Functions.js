@@ -16,22 +16,25 @@ const calcStartingPosition = (boardSquareSize) => {
   ];
 };
 
-//generate random food coordinates 
+//generate random food coordinates
 const randomFoodPosition = (board) => {
-  return { x:Math.floor(Math.random() * board),y:Math.floor(Math.random() * board)}
+  return {
+    x: Math.floor(Math.random() * board),
+    y: Math.floor(Math.random() * board),
+  };
 };
 
 //check if food overlaps and set foor coordinates
 const getFoodPosition = (snakePosition, board, foodSetter) => {
-    const food = randomFoodPosition(board)
-    for (const segment of snakePosition) {
-      if (segment.x === food.x && segment.y === food.y) {
-        foodSetter(food);
-        return;
-      }
+  const food = randomFoodPosition(board);
+  for (const segment of snakePosition) {
+    if (segment.x === food.x && segment.y === food.y) {
+      getFoodPosition(snakePosition, board, foodSetter);
+      return;
     }
-    getFoodPosition(snakePosition, board, foodSetter)
-  },
+  }
+  foodSetter(food);
+};
 
 //check time passed in animation [miliseconds]:
 const updateFrame = (current, last, speed) => {
@@ -64,4 +67,10 @@ const move = (direction, boardSquareSize, positionSetter) => {
   });
 };
 
-export { updateFrame, move, calcStartingPosition, randomFoodPosition, getFoodPosition };
+export {
+  updateFrame,
+  move,
+  calcStartingPosition,
+  randomFoodPosition,
+  getFoodPosition,
+};

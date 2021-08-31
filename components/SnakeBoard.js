@@ -20,7 +20,7 @@ const SnakeBoard = ({ boardSquareSize, getSnakePosition, foodPosition }) => {
   };
   //food position checker:
   const isFoodPosition = (elX, elY) => {
-    if (foodPosition.x === elX && foodPosition.y === elY) return true;
+    if (foodPosition?.x === elX && foodPosition?.y === elY) return true;
     return false;
   };
   //map cell components based on board array:
