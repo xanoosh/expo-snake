@@ -144,7 +144,6 @@ const CellStyle = StyleSheet.create({
     justifyContent: 'center',
   },
   cellActive: {
-    // flexBasis: '5%',
     aspectRatio: 1,
     backgroundColor: '#06bcee',
     borderColor: '#efefef',
