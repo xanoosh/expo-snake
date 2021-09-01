@@ -18,38 +18,49 @@ const getFoodPosition = (snakePosition, board, foodSetter) => {
   foodSetter(food);
 };
 
+//check if snake head is gonna collide with food
 const isFoodEaten = (food, snake) => {
   return food.x === snake.x && food.y === snake.y;
 };
 
-const addEatenFood = (position, eatenSetter) => {
-  eatenSetter((prev) => prev.add(position));
+//add new snake head on food collision
+const digest = (nextHead, snakePositionSetter) => {
+  snakePositionSetter((prev) => [nextHead, ...prev]);
 };
 
-const snakeGonnaDigest = (eatenSet, snakePosition, digestSetter) => {
-  //   result = false;
-  for (const eaten of eatenSet) {
-    if (
-      eaten.x === snakePosition[snakePosition.length - 1].x &&
-      eaten.y === snakePosition[snakePosition.length - 1].y
-    ) {
-      digestSetter(snakePosition[snakePosition.length - 1]);
-    }
-  }
-};
+// const addEatenFood = (position, eatenSetter) => {
+//   eatenSetter((prev) => prev.add(position));
+// };
 
-const snakeDigestedFood = (digest, digestSetter, snakePositionSetter) => {
-  snakePositionSetter((prev) => [...prev, digest]);
-  digestSetter(false);
-};
+// const snakeGonnaDigest = (eatenSet, snakePosition, digestSetter) => {
+//   //   result = false;
+//   for (const eaten of eatenSet) {
+//     if (
+//       eaten.x === snakePosition[snakePosition.length - 1].x &&
+//       eaten.y === snakePosition[snakePosition.length - 1].y
+//     ) {
+//       digestSetter(snakePosition[snakePosition.length - 1]);
+//     }
+//   }
+// };
+
+// const foodCollision = (eatenSet, snakePosition, digestSetter) => {
+//   //   result = false;
+//   for (const eaten of eatenSet) {
+//     if (
+//       eaten.x === snakePosition[snakePosition.length - 1].x &&
+//       eaten.y === snakePosition[snakePosition.length - 1].y
+//     ) {
+//       digestSetter(snakePosition[snakePosition.length - 1]);
+//     }
+//   }
+// };
+
+// const snakeDigestedFood = (digest, digestSetter, snakePositionSetter) => {
+//   snakePositionSetter((prev) => [...prev, digest]);
+//   digestSetter(false);
+// };
 //IMPORTANT: better 'digest' on head (target collision with food
 // if next head = food position just make it the new head of snake position)
 
-export {
-  randomFoodPosition,
-  getFoodPosition,
-  isFoodEaten,
-  addEatenFood,
-  snakeGonnaDigest,
-  snakeDigestedFood,
-};
+export { randomFoodPosition, getFoodPosition, isFoodEaten, digest };

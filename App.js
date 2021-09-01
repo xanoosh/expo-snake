@@ -12,46 +12,43 @@ import {
   calcStartingPosition,
 } from './components/functions/SnakeFunctions';
 import {
-  randomFoodPosition,
   getFoodPosition,
   isFoodEaten,
-  addEatenFood,
+  digest,
 } from './components/functions/FoodFunctions';
 
 export default function App() {
-  const boardSquareSize = 15;
+  const boardSquareSize = 31;
   const [snakePosition, setSnakePosition] = useState(
     calcStartingPosition(boardSquareSize)
   );
   const [snakeDirection, setSnakeDirection] = useState('up');
   const [gameOn, setGameOn] = useState(false);
-  const [snakeSpeed, setSnakeSpeed] = useState(5); //moves per second
+  const [snakeSpeed, setSnakeSpeed] = useState(7); //moves per second
   const [lastTimeStamp, setLastTimeStamp] = useState(0);
   const [currentTimeStamp, setCurrentTimeStamp] = useState(0);
   const [foodPosition, setFoodPosition] = useState();
-  const [eatenPosition, setEatenPosition] = useState(new Set([]));
 
   //main game loop:
   const gameLoop = (timeStamp) => {
     if (gameOn) {
       if (updateFrame(currentTimeStamp, lastTimeStamp, snakeSpeed)) {
         setLastTimeStamp(timeStamp);
-        const newSnakeHead = getNewSnakeHeadPosition(
+        let newSnakeHead = getNewSnakeHeadPosition(
           snakePosition[0],
           snakeDirection,
           boardSquareSize
         );
-        move(newSnakeHead, setSnakePosition);
         if (isFoodEaten(foodPosition, newSnakeHead)) {
+          digest(newSnakeHead, setSnakePosition);
+          newSnakeHead = getNewSnakeHeadPosition(
+            snakePosition[0],
+            snakeDirection,
+            boardSquareSize
+          );
           getFoodPosition(snakePosition, boardSquareSize, setFoodPosition);
-          setEatenPosition(newSnakeHead);
-        }
-        // if (
-        //   isFoodDigested(snakePosition[snakePosition.length - 1], eatenPosition)
-        // ) {
-        //   setSnakePosition((prev) => [...prev, eatenPosition]);
-        //   setEatenPosition({ x: -1, y: -1 });
-        // }
+          setSnakeSpeed((prev) => prev + 2);
+        } else move(newSnakeHead, setSnakePosition);
       }
       setCurrentTimeStamp(timeStamp);
     }
