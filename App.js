@@ -37,12 +37,6 @@ export default function App() {
     getFoodPosition(snakePosition, boardSquareSize, setFoodPosition);
   }, []);
 
-  // useMemo(() => {
-  //   setNewSnakeHead((prev) =>
-  //     getNewSnakeHeadPosition(prev, snakeDirection, boardSquareSize)
-  //   );
-  // }, [snakePosition, snakeDirection]);
-
   useEffect(() => {
     setNewSnakeHead(
       getNewSnakeHeadPosition(snakePosition[0], snakeDirection, boardSquareSize)
@@ -98,9 +92,9 @@ export default function App() {
     move(newSnakeHead, setSnakePosition);
     // if (isFoodEaten(foodPosition, newSnakeHead)) {
     //   digest(newSnakeHead, setSnakePosition);
-    setNewSnakeHead(
-      getNewSnakeHeadPosition(snakePosition[0], snakeDirection, boardSquareSize)
-    );
+    // setNewSnakeHead(
+    //   getNewSnakeHeadPosition(snakePosition[0], snakeDirection, boardSquareSize)
+    // );
     //   getFoodPosition(snakePosition, boardSquareSize, setFoodPosition);
     //   setSnakeSpeed((prev) => prev - 5);
     // } else move(newSnakeHead, setSnakePosition);
