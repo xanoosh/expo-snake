@@ -18,9 +18,12 @@ import {
 } from './components/functions/FoodFunctions';
 
 export default function App() {
-  const boardSquareSize = 21;
+  const boardSquareSize = 11;
   const [snakePosition, setSnakePosition] = useState(
     calcStartingPosition(boardSquareSize)
+  );
+  const [newSnakeHead, setNewSnakeHead] = useState(
+    getNewSnakeHeadPosition(snakePosition[0], snakeDirection, boardSquareSize)
   );
   const [snakeDirection, setSnakeDirection] = useState('up');
   const [gameOn, setGameOn] = useState(false);
@@ -29,6 +32,32 @@ export default function App() {
   const [currentTimeStamp, setCurrentTimeStamp] = useState(0);
   const [foodPosition, setFoodPosition] = useState();
   const [snakeTimeout, setSnakeTimeout] = useState();
+
+  useEffect(() => {
+    getFoodPosition(snakePosition, boardSquareSize, setFoodPosition);
+  }, []);
+
+  // useMemo(() => {
+  //   setNewSnakeHead((prev) =>
+  //     getNewSnakeHeadPosition(prev, snakeDirection, boardSquareSize)
+  //   );
+  // }, [snakePosition, snakeDirection]);
+
+  useEffect(() => {
+    setNewSnakeHead(
+      getNewSnakeHeadPosition(snakePosition[0], snakeDirection, boardSquareSize)
+    );
+  }, [snakePosition, snakeDirection]);
+
+  useEffect(() => {
+    // if (gameOn) requestAnimationFrame(gameLoop);
+    if (gameOn) setSnakeTimeout(setTimeout(gameLoop, snakeSpeed));
+    // if (!gameOn) setSnakeTimeout(clearTimeout(gameLoop, snakeTimeout));
+  }, [gameOn]);
+
+  // useEffect(() => {
+  //   requestAnimationFrame(gameLoop);
+  // }, [currentTimeStamp]);
 
   // main game loop (animationFrame):
   // const gameLoop = (timeStamp) => {
@@ -64,39 +93,21 @@ export default function App() {
   // setTimeout(myFunction, counter);
   const gameLoop = () => {
     // setSnakeTimeout(clearTimeout(snakeTimeout));
-    let newSnakeHead = getNewSnakeHeadPosition(
-      snakePosition[0],
-      snakeDirection,
-      boardSquareSize
-    );
+    // let newSnakeHead =
+    // );
     move(newSnakeHead, setSnakePosition);
     // if (isFoodEaten(foodPosition, newSnakeHead)) {
     //   digest(newSnakeHead, setSnakePosition);
-    //   newSnakeHead = getNewSnakeHeadPosition(
-    //     snakePosition[0],
-    //     snakeDirection,
-    //     boardSquareSize
-    //   );
+    setNewSnakeHead(
+      getNewSnakeHeadPosition(snakePosition[0], snakeDirection, boardSquareSize)
+    );
     //   getFoodPosition(snakePosition, boardSquareSize, setFoodPosition);
     //   setSnakeSpeed((prev) => prev - 5);
     // } else move(newSnakeHead, setSnakePosition);
     // on speed change:
+    clearTimeout(snakeTimeout);
     setSnakeTimeout(setTimeout(gameLoop, snakeSpeed));
   };
-
-  useEffect(() => {
-    getFoodPosition(snakePosition, boardSquareSize, setFoodPosition);
-  }, []);
-
-  useEffect(() => {
-    // if (gameOn) requestAnimationFrame(gameLoop);
-    if (gameOn) setSnakeTimeout(setTimeout(gameLoop, snakeSpeed));
-    if (!gameOn) setSnakeTimeout(clearTimeout(gameLoop, snakeTimeout));
-  }, [gameOn]);
-
-  // useEffect(() => {
-  //   requestAnimationFrame(gameLoop);
-  // }, [currentTimeStamp]);
 
   return (
     <View style={mainStyle.container}>
@@ -104,6 +115,7 @@ export default function App() {
         last={lastTimeStamp}
         current={currentTimeStamp}
         timeout={snakeTimeout}
+        newSnakeHead={newSnakeHead}
       />
 
       <SnakeBoard
