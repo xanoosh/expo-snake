@@ -28,7 +28,7 @@ export default function App() {
   const [lastTimeStamp, setLastTimeStamp] = useState(0);
   const [currentTimeStamp, setCurrentTimeStamp] = useState(0);
   const [foodPosition, setFoodPosition] = useState();
-  const [snakeInterval, setSnakeInterval] = useState();
+  const [snakeTimeout, setSnakeTimeout] = useState();
 
   // main game loop (animationFrame):
   // const gameLoop = (timeStamp) => {
@@ -55,24 +55,33 @@ export default function App() {
   //   }
   // };
 
-  //main game loop (setinterval)
+  //main game loop (setTimeout)
+
+  // var myFunction = function () {
+  //   counter *= 10;
+  //   setTimeout(myFunction, counter);
+  // };
+  // setTimeout(myFunction, counter);
   const gameLoop = () => {
-    setLastTimeStamp(timeStamp);
+    // setSnakeTimeout(clearTimeout(snakeTimeout));
     let newSnakeHead = getNewSnakeHeadPosition(
       snakePosition[0],
       snakeDirection,
       boardSquareSize
     );
-    if (isFoodEaten(foodPosition, newSnakeHead)) {
-      digest(newSnakeHead, setSnakePosition);
-      newSnakeHead = getNewSnakeHeadPosition(
-        snakePosition[0],
-        snakeDirection,
-        boardSquareSize
-      );
-      getFoodPosition(snakePosition, boardSquareSize, setFoodPosition);
-      setSnakeSpeed((prev) => prev - 5);
-    } else move(newSnakeHead, setSnakePosition);
+    move(newSnakeHead, setSnakePosition);
+    // if (isFoodEaten(foodPosition, newSnakeHead)) {
+    //   digest(newSnakeHead, setSnakePosition);
+    //   newSnakeHead = getNewSnakeHeadPosition(
+    //     snakePosition[0],
+    //     snakeDirection,
+    //     boardSquareSize
+    //   );
+    //   getFoodPosition(snakePosition, boardSquareSize, setFoodPosition);
+    //   setSnakeSpeed((prev) => prev - 5);
+    // } else move(newSnakeHead, setSnakePosition);
+    // on speed change:
+    setSnakeTimeout(setTimeout(gameLoop, snakeSpeed));
   };
 
   useEffect(() => {
@@ -81,8 +90,8 @@ export default function App() {
 
   useEffect(() => {
     // if (gameOn) requestAnimationFrame(gameLoop);
-    if (gameOn) setSnakeInterval(setInterval(gameLoop, snakeSpeed));
-    if (!gameOn) setSnakeInterval(clearInterval(snakeInterval));
+    if (gameOn) setSnakeTimeout(setTimeout(gameLoop, snakeSpeed));
+    if (!gameOn) setSnakeTimeout(clearTimeout(gameLoop, snakeTimeout));
   }, [gameOn]);
 
   // useEffect(() => {
@@ -91,7 +100,11 @@ export default function App() {
 
   return (
     <View style={mainStyle.container}>
-      <TimeStampData last={lastTimeStamp} current={currentTimeStamp} />
+      <TimeStampData
+        last={lastTimeStamp}
+        current={currentTimeStamp}
+        timeout={snakeTimeout}
+      />
 
       <SnakeBoard
         boardSquareSize={boardSquareSize}
